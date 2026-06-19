@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokédex — MySyz Channal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Sarabun:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .dex-toolbar{
+    display:flex; gap:12px; margin-bottom:32px; flex-wrap:wrap; align-items:center;
+  }
+  .dex-toolbar input{
+    background:var(--card); border:1px solid var(--grid-line); color:var(--bone);
+    padding:12px 16px; border-radius:2px; font-family:'Sarabun',sans-serif; font-size:14px;
+    flex:1; min-width:200px;
+  }
+  .dex-toolbar input:focus{outline:2px solid var(--poke-yellow); outline-offset:2px;}
+  .type-filter{
+    display:flex; gap:8px; flex-wrap:wrap;
+  }
+  .type-filter button{
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase;
+    background:var(--card); border:1px solid var(--grid-line); color:var(--muted);
+    padding:9px 16px; border-radius:100px; cursor:pointer; transition:all .2s;
+  }
+  .type-filter button.active{background:var(--poke-yellow); color:var(--void); border-color:var(--poke-yellow);}
+  .type-filter button:hover{border-color:var(--poke-yellow);}
+
+  .dex-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  @media (max-width:900px){.dex-grid{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:640px){.dex-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:420px){.dex-grid{grid-template-columns:1fr;}}
+
+  .dex-card{
+    background:var(--card); border:1px solid var(--grid-line); border-radius:4px;
+    padding:20px; text-align:center; transition:transform .3s, border-color .3s;
+  }
+  .dex-card:hover{transform:translateY(-4px); border-color:var(--poke-yellow);}
+  .dex-id{font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:1px;}
+  .dex-icon{font-size:44px; margin:14px 0 10px;}
+  .dex-name{font-family:'Anton',sans-serif; font-size:17px; margin-bottom:8px;}
+  .dex-type{
+    display:inline-block; font-family:'Space Mono',monospace; font-size:9.5px; letter-spacing:1px;
+    text-transform:uppercase; padding:3px 10px; border-radius:100px; margin:0 2px;
+  }
+  .type-electric{background:rgba(255,203,5,0.15); color:var(--poke-yellow); border:1px solid rgba(255,203,5,0.4);}
+  .type-fire{background:rgba(227,53,13,0.15); color:var(--poke-red); border:1px solid rgba(227,53,13,0.4);}
+  .type-water{background:rgba(42,117,187,0.15); color:#5fa8e0; border:1px solid rgba(42,117,187,0.4);}
+  .type-grass{background:rgba(94,176,82,0.15); color:#7bc96a; border:1px solid rgba(94,176,82,0.4);}
+  .type-normal{background:rgba(168,168,150,0.15); color:#c2c2ad; border:1px solid rgba(168,168,150,0.4);}
+  .type-psychic{background:rgba(232,87,134,0.15); color:#f08bb0; border:1px solid rgba(232,87,134,0.4);}
+
+  .dex-card[hidden]{display:none;}
+</style>
+</head>
+<body>
+
+<div class="noise-layer"></div>
+
+<header>
+  <a href="index.html" class="logo"><span class="ball"></span>MYSYZ<span>CHANNAL</span></a>
+  <button class="menu-toggle" aria-label="เปิดเมนู" onclick="document.querySelector('.mainnav').classList.toggle('open')">☰</button>
+  <nav class="mainnav">
+    <a href="index.html">หน้าแรก</a>
+    <a href="news.html">ข่าว/อัปเดต</a>
+    <a href="guide.html">ไกด์/วิธีเล่น</a>
+    <a href="pokedex.html" class="active">Pokédex</a>
+    <a href="community-day.html">Community Day</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </nav>
+</header>
+
+<div class="coordbar">
+  <a href="index.html">หน้าแรก</a><span>/</span><span class="here">Pokédex</span>
+  <div class="dotline"></div>
+  <span id="dex-count">แสดง 12 ตัว</span>
+</div>
+
+<section class="page-hero">
+  <p class="tag">📘 Database</p>
+  <h1>Pokédex</h1>
+  <p class="lead">ฐานข้อมูลโปเกมอนตัวอย่างที่พบได้บ่อยในเกม ใช้ช่องค้นหาหรือกรองตามธาตุเพื่อหาตัวที่สนใจ</p>
+</section>
+
+<section class="section">
+  <div class="dex-toolbar">
+    <input type="text" id="dex-search" placeholder="ค้นหาชื่อโปเกมอน..." aria-label="ค้นหาโปเกมอน">
+  </div>
+  <div class="type-filter" id="type-filter" role="group" aria-label="กรองตามธาตุ">
+    <button data-type="all" class="active">ทั้งหมด</button>
+    <button data-type="electric">Electric</button>
+    <button data-type="fire">Fire</button>
+    <button data-type="water">Water</button>
+    <button data-type="grass">Grass</button>
+    <button data-type="normal">Normal</button>
+    <button data-type="psychic">Psychic</button>
+  </div>
+
+  <div class="dex-grid" id="dex-grid" style="margin-top:30px;">
+
+    <div class="dex-card" data-type="electric" data-name="โวลตี้เม้าส์">
+      <div class="dex-id">#001</div>
+      <div class="dex-icon">⚡</div>
+      <div class="dex-name">โวลตี้เม้าส์</div>
+      <span class="dex-type type-electric">Electric</span>
+    </div>
+
+    <div class="dex-card" data-type="fire" data-name="เฟลมซอรัส">
+      <div class="dex-id">#002</div>
+      <div class="dex-icon">🔥</div>
+      <div class="dex-name">เฟลมซอรัส</div>
+      <span class="dex-type type-fire">Fire</span>
+    </div>
+
+    <div class="dex-card" data-type="water" data-name="อะควาฟิน">
+      <div class="dex-id">#003</div>
+      <div class="dex-icon">💧</div>
+      <div class="dex-name">อะควาฟิน</div>
+      <span class="dex-type type-water">Water</span>
+    </div>
+
+    <div class="dex-card" data-type="grass" data-name="ลีฟสปราว์ท">
+      <div class="dex-id">#004</div>
+      <div class="dex-icon">🌿</div>
+      <div class="dex-name">ลีฟสปราวท์</div>
+      <span class="dex-type type-grass">Grass</span>
+    </div>
+
+    <div class="dex-card" data-type="normal" data-name="พัฟเฟอร์รี">
+      <div class="dex-id">#005</div>
+      <div class="dex-icon">⚪</div>
+      <div class="dex-name">พัฟเฟอร์รี</div>
+      <span class="dex-type type-normal">Normal</span>
+    </div>
+
+    <div class="dex-card" data-type="psychic" data-name="มายด์ลิง">
+      <div class="dex-id">#006</div>
+      <div class="dex-icon">🔮</div>
+      <div class="dex-name">มายด์ลิง</div>
+      <span class="dex-type type-psychic">Psychic</span>
+    </div>
+
+    <div class="dex-card" data-type="fire" data-name="เอมเบอร์คับ">
+      <div class="dex-id">#007</div>
+      <div class="dex-icon">🔥</div>
+      <div class="dex-name">เอมเบอร์คับ</div>
+      <span class="dex-type type-fire">Fire</span>
+    </div>
+
+    <div class="dex-card" data-type="water" data-name="บับเบิลอ็อตเตอร์">
+      <div class="dex-id">#008</div>
+      <div class="dex-icon">💧</div>
+      <div class="dex-name">บับเบิลอ็อตเตอร์</div>
+      <span class="dex-type type-water">Water</span>
+    </div>
+
+    <div class="dex-card" data-type="electric" data-name="สปาร์คฟ็อกซ์">
+      <div class="dex-id">#009</div>
+      <div class="dex-icon">⚡</div>
+      <div class="dex-name">สปาร์คฟ็อกซ์</div>
+      <span class="dex-type type-electric">Electric</span>
+    </div>
+
+    <div class="dex-card" data-type="grass" data-name="ธอร์นลิง">
+      <div class="dex-id">#010</div>
+      <div class="dex-icon">🌿</div>
+      <div class="dex-name">ธอร์นลิง</div>
+      <span class="dex-type type-grass">Grass</span>
+    </div>
+
+    <div class="dex-card" data-type="normal" data-name="วูลลี่แลมบ์">
+      <div class="dex-id">#011</div>
+      <div class="dex-icon">⚪</div>
+      <div class="dex-name">วูลลี่แลมบ์</div>
+      <span class="dex-type type-normal">Normal</span>
+    </div>
+
+    <div class="dex-card" data-type="psychic" data-name="ดรีมมูน">
+      <div class="dex-id">#012</div>
+      <div class="dex-icon">🔮</div>
+      <div class="dex-name">ดรีมมูน</div>
+      <span class="dex-type type-psychic">Psychic</span>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 MySyz Channal — Pokémon GO Concept Page</span>
+  <div class="fl">
+    <a href="index.html">หน้าแรก</a>
+    <a href="news.html">ข่าว</a>
+    <a href="guide.html">ไกด์</a>
+    <a href="community-day.html">Community Day</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </div>
+</footer>
+
+<script>
+  const searchInput = document.getElementById('dex-search');
+  const typeButtons = document.querySelectorAll('#type-filter button');
+  const cards = document.querySelectorAll('.dex-card');
+  const countLabel = document.getElementById('dex-count');
+  let activeType = 'all';
+
+  function applyFilters(){
+    const query = searchInput.value.trim().toLowerCase();
+    let visible = 0;
+    cards.forEach(card => {
+      const matchesType = activeType === 'all' || card.dataset.type === activeType;
+      const matchesSearch = card.dataset.name.toLowerCase().includes(query);
+      const show = matchesType && matchesSearch;
+      card.hidden = !show;
+      if(show) visible++;
+    });
+    countLabel.textContent = `แสดง ${visible} ตัว`;
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+
+  typeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      typeButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeType = btn.dataset.type;
+      applyFilters();
+    });
+  });
+</script>
+
+</body>
+</html>
