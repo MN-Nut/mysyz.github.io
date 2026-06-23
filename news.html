@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ข่าว/อัปเดตเกม — MySyz Channal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Sarabun:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .news-feed{display:flex; flex-direction:column; gap:18px; max-width:760px;}
+  .news-item{
+    background:var(--card); border:1px solid var(--grid-line); border-radius:4px;
+    padding:26px 28px; display:flex; gap:22px; align-items:flex-start;
+    transition:border-color .3s;
+  }
+  .news-item:hover{border-color:var(--poke-yellow);}
+  .news-date{
+    font-family:'Space Mono',monospace; font-size:11px; color:var(--poke-yellow);
+    letter-spacing:1.5px; white-space:nowrap; padding-top:4px; min-width:90px;
+  }
+  .news-body h3{font-family:'Anton',sans-serif; font-size:19px; margin-bottom:8px;}
+  .news-body p{font-size:13.5px; color:var(--muted); line-height:1.7;}
+  .news-cat{
+    display:inline-block; margin-top:10px; font-family:'Space Mono',monospace; font-size:10px;
+    letter-spacing:1.5px; text-transform:uppercase; color:var(--poke-red);
+    border:1px solid rgba(227,53,13,0.4); padding:3px 10px; border-radius:100px;
+  }
+  .side-panel{
+    background:var(--card); border:1px solid var(--grid-line); border-radius:4px; padding:26px;
+  }
+  .side-panel h4{font-family:'Anton',sans-serif; font-size:15px; margin-bottom:16px; letter-spacing:0.5px;}
+  .side-panel ul{list-style:none; display:flex; flex-direction:column; gap:12px;}
+  .side-panel li{font-size:13px; color:var(--muted); display:flex; justify-content:space-between; border-bottom:1px solid var(--grid-line); padding-bottom:10px;}
+  .side-panel li span{color:var(--bone);}
+  .layout-2col{display:grid; grid-template-columns:1fr 280px; gap:40px; align-items:flex-start;}
+  @media (max-width:880px){ .layout-2col{grid-template-columns:1fr;} .news-item{flex-direction:column;} }
+</style>
+</head>
+<body>
+
+<div class="noise-layer"></div>
+
+<header>
+  <a href="index.html" class="logo"><span class="ball"></span>MYSYZ<span>CHANNAL</span></a>
+  <button class="menu-toggle" aria-label="เปิดเมนู" onclick="document.querySelector('.mainnav').classList.toggle('open')">☰</button>
+  <nav class="mainnav">
+    <a href="index.html">หน้าแรก</a>
+    <a href="news.html" class="active">ข่าว/อัปเดต</a>
+    <a href="guide.html">ไกด์/วิธีเล่น</a>
+    <a href="pokedex.html">Pokédex</a>
+    <a href="community-day.html">Community Day</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </nav>
+</header>
+
+<div class="coordbar">
+  <a href="index.html">หน้าแรก</a><span>/</span><span class="here">ข่าว/อัปเดตเกม</span>
+  <div class="dotline"></div>
+  <span>LAT 13.75°N · LON 100.50°E</span>
+</div>
+
+<section class="page-hero">
+  <p class="tag">📡 News Feed</p>
+  <h1>ข่าว &amp; อัปเดตเกม</h1>
+  <p class="lead">ทุกความเคลื่อนไหวของ Pokémon GO ตั้งแต่แพตช์ใหม่ อีเวนต์ตามฤดูกาล ไปจนถึงโปเกมอนที่เพิ่งปล่อยลงเกม</p>
+</section>
+
+<section class="section">
+  <div class="layout-2col">
+    <div class="news-feed">
+
+      <article class="news-item">
+        <div class="news-date">17 มิ.ย. 2026</div>
+        <div class="news-body">
+          <h3>อีเวนต์ฤดูร้อน: โปเกมอนน้ำออกอาละวาด</h3>
+          <p>ช่วงอีเวนต์นี้โปเกมอนธาตุน้ำจะปรากฏตัวถี่ขึ้นทั้งบนแผนที่และในไข่ พร้อมโบนัสฝุ่นดาวจากการจับ</p>
+          <span class="news-cat">Event</span>
+        </div>
+      </article>
+
+      <article class="news-item">
+        <div class="news-date">10 มิ.ย. 2026</div>
+        <div class="news-body">
+          <h3>ปรับสมดุลเรดบอสระดับ 5</h3>
+          <p>ทีมพัฒนาปรับค่าพลังของบอสเรดบางตัวให้รวมพลังตีได้ง่ายขึ้นสำหรับผู้เล่นกลุ่มเล็ก</p>
+          <span class="news-cat">Balance</span>
+        </div>
+      </article>
+
+      <article class="news-item">
+        <div class="news-date">2 มิ.ย. 2026</div>
+        <div class="news-body">
+          <h3>เปิดตัวฟีเจอร์เส้นทางเดินแนะนำ</h3>
+          <p>แอปเพิ่มระบบแนะนำเส้นทางเดินในพื้นที่ที่มี PokéStop และ Gym หนาแน่น ช่วยวางแผนทริปจับโปเกมอนได้ง่ายขึ้น</p>
+          <span class="news-cat">Feature</span>
+        </div>
+      </article>
+
+      <article class="news-item">
+        <div class="news-date">25 พ.ค. 2026</div>
+        <div class="news-body">
+          <h3>แก้ไขบั๊กระบบเทรดระยะไกล</h3>
+          <p>อัปเดตแก้ปัญหาการเทรดระยะไกลที่ค้างสถานะ "กำลังประมวลผล" นานเกินไปในบางอุปกรณ์</p>
+          <span class="news-cat">Bug Fix</span>
+        </div>
+      </article>
+
+    </div>
+
+    <aside class="side-panel">
+      <h4>สรุปสถานะเกม</h4>
+      <ul>
+        <li>เวอร์ชันล่าสุด <span>0.0 (concept)</span></li>
+        <li>อีเวนต์ที่กำลังดำเนินอยู่ <span>1</span></li>
+        <li>อัปเดตล่าสุด <span>17 มิ.ย. 2026</span></li>
+        <li>หมวดข่าวที่อัปเดตบ่อย <span>Event</span></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 MySyz Channal — Pokémon GO Concept Page</span>
+  <div class="fl">
+    <a href="index.html">หน้าแรก</a>
+    <a href="guide.html">ไกด์</a>
+    <a href="pokedex.html">Pokédex</a>
+    <a href="community-day.html">Community Day</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </div>
+</footer>
+
+</body>
+</html>
