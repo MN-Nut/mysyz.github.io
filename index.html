@@ -20,15 +20,15 @@
   .hero-bg{
     position:absolute; inset:0; z-index:0;
     background:
-      radial-gradient(ellipse 70% 60% at 75% 30%, rgba(227,53,13,0.16), transparent 60%),
-      radial-gradient(ellipse 55% 45% at 10% 80%, rgba(255,203,5,0.08), transparent 60%),
+      radial-gradient(ellipse 70% 60% at 75% 30%, rgba(255,203,5,0.08), transparent 60%),
+      radial-gradient(ellipse 55% 45% at 10% 80%, rgba(255,203,5,0.05), transparent 60%),
       var(--void);
   }
   .hero-bg::after{
     content:'';
     position:absolute; inset:0;
-    background-image: linear-gradient(rgba(255,203,5,0.045) 1px, transparent 1px),
-                       linear-gradient(90deg, rgba(255,203,5,0.045) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(255,203,5,0.035) 1px, transparent 1px),
+                       linear-gradient(90deg, rgba(255,203,5,0.035) 1px, transparent 1px);
     background-size:46px 46px;
     mask-image: radial-gradient(circle at 50% 50%, black, transparent 75%);
   }
@@ -53,7 +53,7 @@
     font-family:'Anton',sans-serif; font-weight:400;
     font-size:clamp(42px,7.4vw,92px); line-height:0.96; letter-spacing:0.5px;
   }
-  h1.hero-title .accent{color:var(--poke-red); -webkit-text-stroke:0;}
+  h1.hero-title .accent{color:var(--poke-yellow); -webkit-text-stroke:0;}
 
   .hero-sub{margin-top:24px; max-width:480px; font-size:clamp(15px,1.5vw,17px); color:#bbb4c2; line-height:1.75;}
 
@@ -80,7 +80,7 @@
   .radar-ring.r1{width:100%; height:100%;}
   .radar-ring.r2{width:72%; height:72%;}
   .radar-ring.r3{width:42%; height:42%;}
-  .radar-ring.r4{width:16%; height:16%; background:rgba(227,53,13,0.12); border-color:rgba(227,53,13,0.5);}
+  .radar-ring.r4{width:16%; height:16%; background:rgba(255,203,5,0.10); border-color:rgba(255,203,5,0.45);}
 
   .radar-cross{
     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
@@ -96,7 +96,7 @@
     position:absolute; top:50%; left:50%;
     width:50%; height:50%;
     transform-origin:0% 0%;
-    background:conic-gradient(from 0deg, rgba(227,53,13,0.45), transparent 60deg);
+    background:conic-gradient(from 0deg, rgba(255,203,5,0.35), transparent 60deg);
     animation:sweep 4s linear infinite;
     border-radius:0 100% 0 0;
   }
@@ -108,21 +108,21 @@
     animation:blip-pulse 2.6s ease-in-out infinite;
   }
   .blip.b1{top:30%; left:62%; animation-delay:0s;}
-  .blip.b2{top:68%; left:34%; background:var(--poke-red); box-shadow:0 0 12px rgba(227,53,13,0.7); animation-delay:0.8s;}
+  .blip.b2{top:68%; left:34%; background:#8a9a4a; box-shadow:0 0 12px rgba(138,154,74,0.6); animation-delay:0.8s;}
   .blip.b3{top:46%; left:78%; animation-delay:1.6s;}
   @keyframes blip-pulse{0%,100%{opacity:0.4; transform:scale(0.9);}50%{opacity:1; transform:scale(1.3);}}
 
   .radar-center{
     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
     width:34px; height:34px; border-radius:50%;
-    background:linear-gradient(to bottom, var(--poke-red) 0 48%, var(--bone) 52% 100%);
-    border:3px solid var(--void);
-    box-shadow:0 0 0 1px rgba(255,203,5,0.4), 0 0 28px rgba(227,53,13,0.5);
+    background:radial-gradient(circle at 35% 30%, #3a3340, var(--void-2) 70%);
+    border:3px solid var(--poke-yellow);
+    box-shadow:0 0 0 1px rgba(255,203,5,0.3), 0 0 28px rgba(255,203,5,0.35);
     z-index:2;
   }
   .radar-center::after{
     content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-    width:11px;height:11px;border-radius:50%; background:var(--void); border:2px solid var(--bone);
+    width:11px;height:11px;border-radius:50%; background:var(--void); border:2px solid var(--poke-yellow);
   }
   .radar-label{
     position:absolute; bottom:-34px; left:50%; transform:translateX(-50%);
@@ -131,9 +131,9 @@
   }
 
   /* ---------- ENTRY GRID (sub page cards) ---------- */
-  .entry-section{padding:90px clamp(20px,5vw,64px) 110px; background:var(--void-2);}
-  .entry-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:18px;}
-  @media (max-width:1200px){ .entry-grid{grid-template-columns:repeat(3,1fr);} }
+  .entry-section{padding:140px clamp(20px,5vw,64px) 110px; background:var(--void-2);}
+  .entry-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  @media (max-width:1000px){ .entry-grid{grid-template-columns:repeat(3,1fr);} }
   @media (max-width:680px){ .entry-grid{grid-template-columns:1fr 1fr;} }
   @media (max-width:420px){ .entry-grid{grid-template-columns:1fr;} }
 
@@ -151,7 +151,7 @@
   }
   .entry-card::before{
     content:''; position:absolute; inset:0; opacity:0; transition:opacity .35s;
-    background:radial-gradient(circle at 30% 0%, rgba(227,53,13,0.18), transparent 60%);
+    background:radial-gradient(circle at 30% 0%, rgba(255,203,5,0.14), transparent 60%);
   }
   .entry-card:hover{transform:translateY(-6px); border-color:var(--poke-yellow);}
   .entry-card:hover::before{opacity:1;}
@@ -196,54 +196,6 @@
     <a href="contact.html">ติดต่อเรา</a>
   </nav>
 </header>
-
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid">
-    <div>
-      <p class="eyebrow">Pokémon GO Concept Channal</p>
-      <h1 class="hero-title">ออกไป<br>ล่า<span class="accent">โปเกมอน</span><br>กันเถอะ</h1>
-      <p class="hero-sub">
-        ทุกข่าวอัปเดต ไกด์การเล่น Pokédex และตารางคอมมูนิตี้เดย์ของ Pokémon GO
-        รวบรวมไว้ในที่เดียว สำหรับเทรนเนอร์ที่เดินจริง จับจริง ทุกวัน
-      </p>
-      <div class="hero-actions">
-        <a href="news.html" class="btn btn-primary">ดูข่าวล่าสุด →</a>
-        <a href="guide.html" class="btn btn-ghost">เริ่มเล่นยังไง</a>
-      </div>
-      <div class="hero-meta">
-        <div class="meta-item"><div class="meta-num">5</div><div class="meta-label">หมวดเนื้อหา</div></div>
-        <div class="meta-item"><div class="meta-num">รายเดือน</div><div class="meta-label">Community Day</div></div>
-        <div class="meta-item"><div class="meta-num">อัปเดตสด</div><div class="meta-label">ข่าวเกม</div></div>
-      </div>
-    </div>
-
-    <div class="radar-wrap" aria-hidden="true">
-      <div class="radar-ring r1"></div>
-      <div class="radar-ring r2"></div>
-      <div class="radar-ring r3"></div>
-      <div class="radar-ring r4"></div>
-      <div class="radar-cross"></div>
-      <div class="radar-sweep"></div>
-      <div class="blip b1"></div>
-      <div class="blip b2"></div>
-      <div class="blip b3"></div>
-      <div class="radar-center"></div>
-      <div class="radar-label">กำลังสแกนพื้นที่ใกล้เคียง</div>
-    </div>
-  </div>
-</section>
-
-<div class="ticker-wrap">
-  <div class="ticker">
-    <span>ข่าว — อัปเดตแพตช์ล่าสุดของเกม</span>
-    <span>COMMUNITY DAY — ตารางเดือนนี้</span>
-    <span>POKÉDEX — เช็กข้อมูลโปเกมอนทุกตัว</span>
-    <span>ไกด์ — เคล็ดลับจับโปเกมอนแบบมือโปร</span>
-    <span>ข่าว — อัปเดตแพตช์ล่าสุดของเกม</span>
-    <span>COMMUNITY DAY — ตารางเดือนนี้</span>
-  </div>
-</div>
 
 <section class="entry-section">
   <div class="section-head">
@@ -293,8 +245,24 @@
       <span class="go">เข้าดู →</span>
     </a>
 
-    <a href="contact.html" class="entry-card">
+    <a href="rank200.html" class="entry-card">
       <span class="num">06</span>
+      <span class="icon">🏆</span>
+      <h3>Rank200</h3>
+      <p>อันดับโปเกมอนยอดนิยม 200 ตัวแรกสำหรับลีก CP 1500</p>
+      <span class="go">เข้าดู →</span>
+    </a>
+
+    <a href="all-pokemon-pvp.html" class="entry-card">
+      <span class="num">07</span>
+      <span class="icon">🛡️</span>
+      <h3>All Pokémon PVP</h3>
+      <p>ฐานข้อมูลอันดับโปเกมอนทั้งหมดสำหรับการต่อสู้ PvP แบบละเอียด</p>
+      <span class="go">เข้าดู →</span>
+    </a>
+
+    <a href="contact.html" class="entry-card">
+      <span class="num">08</span>
       <span class="icon">✉️</span>
       <h3>ติดต่อเรา</h3>
       <p>ส่งคำถาม ข้อเสนอแนะ หรือร่วมงานกับทีมช่อง</p>
@@ -312,6 +280,8 @@
     <a href="pokedex.html">Pokédex</a>
     <a href="community-day.html">Community Day</a>
     <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
     <a href="contact.html">ติดต่อเรา</a>
   </div>
 </footer>
