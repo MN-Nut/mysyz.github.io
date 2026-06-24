@@ -3,180 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MySyz Channal — Pokémon GO Concept</title>
+<title>MySyz Channel — Pokémon GO Concept</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Sarabun:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-  /* ---- Home-only styles ---- */
-  .hero{
-    position:relative;
-    min-height:100vh;
+  /* ---------- CIRCULAR HUB (Poké Ball + curved title + ring nav) ---------- */
+  .hub-section{
+    padding:140px clamp(20px,5vw,64px) 110px;
+    background:var(--void-2);
     display:flex;
+    flex-direction:column;
     align-items:center;
-    overflow:hidden;
-    padding:120px clamp(20px,5vw,64px) 60px;
   }
-  .hero-bg{
-    position:absolute; inset:0; z-index:0;
-    background:
-      radial-gradient(ellipse 70% 60% at 75% 30%, rgba(255,203,5,0.08), transparent 60%),
-      radial-gradient(ellipse 55% 45% at 10% 80%, rgba(255,203,5,0.05), transparent 60%),
-      var(--void);
-  }
-  .hero-bg::after{
-    content:'';
-    position:absolute; inset:0;
-    background-image: linear-gradient(rgba(255,203,5,0.035) 1px, transparent 1px),
-                       linear-gradient(90deg, rgba(255,203,5,0.035) 1px, transparent 1px);
-    background-size:46px 46px;
-    mask-image: radial-gradient(circle at 50% 50%, black, transparent 75%);
-  }
-
-  .hero-grid{
-    position:relative; z-index:1;
-    display:grid;
-    grid-template-columns:1.1fr 0.9fr;
-    gap:40px;
-    align-items:center;
-    width:100%;
-  }
-  @media (max-width:880px){ .hero-grid{grid-template-columns:1fr;} }
-
-  .eyebrow{
-    font-family:'Space Mono',monospace; font-size:12px; letter-spacing:3px; text-transform:uppercase;
-    color:var(--poke-yellow); display:flex; align-items:center; gap:12px; margin-bottom:18px;
-  }
-  .eyebrow::before{content:'';width:28px;height:1px;background:var(--poke-yellow);}
-
-  h1.hero-title{
-    font-family:'Anton',sans-serif; font-weight:400;
-    font-size:clamp(42px,7.4vw,92px); line-height:0.96; letter-spacing:0.5px;
-  }
-  h1.hero-title .accent{color:var(--poke-yellow); -webkit-text-stroke:0;}
-
-  .hero-sub{margin-top:24px; max-width:480px; font-size:clamp(15px,1.5vw,17px); color:#bbb4c2; line-height:1.75;}
-
-  .hero-actions{margin-top:36px; display:flex; gap:16px; flex-wrap:wrap;}
-
-  .hero-meta{margin-top:48px; display:flex; gap:clamp(24px,4vw,48px); flex-wrap:wrap;}
-  .meta-item{font-family:'Space Mono',monospace;}
-  .meta-num{font-size:clamp(22px,2.6vw,30px); font-family:'Anton',sans-serif; color:var(--bone); line-height:1;}
-  .meta-label{font-size:10.5px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:6px;}
-
-  /* --- Signature: radar scanner --- */
-  .radar-wrap{
+  .hub-wrap{
     position:relative;
     width:100%;
-    max-width:420px;
+    max-width:600px;
     aspect-ratio:1;
-    margin:0 auto;
+    margin:40px auto 0;
   }
-  .radar-ring{
-    position:absolute; border-radius:50%;
-    border:1px solid rgba(255,203,5,0.22);
-    top:50%; left:50%; transform:translate(-50%,-50%);
-  }
-  .radar-ring.r1{width:100%; height:100%;}
-  .radar-ring.r2{width:72%; height:72%;}
-  .radar-ring.r3{width:42%; height:42%;}
-  .radar-ring.r4{width:16%; height:16%; background:rgba(255,203,5,0.10); border-color:rgba(255,203,5,0.45);}
+  .hub-svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
 
-  .radar-cross{
-    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-    width:100%; height:100%;
+  .hub-nav{
+    position:absolute; inset:0; width:100%; height:100%;
   }
-  .radar-cross::before, .radar-cross::after{
-    content:''; position:absolute; background:rgba(255,203,5,0.12);
-  }
-  .radar-cross::before{top:50%; left:0; right:0; height:1px; transform:translateY(-50%);}
-  .radar-cross::after{left:50%; top:0; bottom:0; width:1px; transform:translateX(-50%);}
-
-  .radar-sweep{
-    position:absolute; top:50%; left:50%;
-    width:50%; height:50%;
-    transform-origin:0% 0%;
-    background:conic-gradient(from 0deg, rgba(255,203,5,0.35), transparent 60deg);
-    animation:sweep 4s linear infinite;
-    border-radius:0 100% 0 0;
-  }
-  @keyframes sweep{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
-
-  .blip{
-    position:absolute; width:10px; height:10px; border-radius:50%;
-    background:var(--poke-yellow); box-shadow:0 0 12px rgba(255,203,5,0.7);
-    animation:blip-pulse 2.6s ease-in-out infinite;
-  }
-  .blip.b1{top:30%; left:62%; animation-delay:0s;}
-  .blip.b2{top:68%; left:34%; background:#8a9a4a; box-shadow:0 0 12px rgba(138,154,74,0.6); animation-delay:0.8s;}
-  .blip.b3{top:46%; left:78%; animation-delay:1.6s;}
-  @keyframes blip-pulse{0%,100%{opacity:0.4; transform:scale(0.9);}50%{opacity:1; transform:scale(1.3);}}
-
-  .radar-center{
-    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-    width:34px; height:34px; border-radius:50%;
-    background:radial-gradient(circle at 35% 30%, #3a3340, var(--void-2) 70%);
-    border:3px solid var(--poke-yellow);
-    box-shadow:0 0 0 1px rgba(255,203,5,0.3), 0 0 28px rgba(255,203,5,0.35);
-    z-index:2;
-  }
-  .radar-center::after{
-    content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-    width:11px;height:11px;border-radius:50%; background:var(--void); border:2px solid var(--poke-yellow);
-  }
-  .radar-label{
-    position:absolute; bottom:-34px; left:50%; transform:translateX(-50%);
-    font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:2px; color:var(--muted);
-    text-transform:uppercase; white-space:nowrap;
-  }
-
-  /* ---------- ENTRY GRID (sub page cards) ---------- */
-  .entry-section{padding:140px clamp(20px,5vw,64px) 110px; background:var(--void-2);}
-  .entry-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
-  @media (max-width:1000px){ .entry-grid{grid-template-columns:repeat(3,1fr);} }
-  @media (max-width:680px){ .entry-grid{grid-template-columns:1fr 1fr;} }
-  @media (max-width:420px){ .entry-grid{grid-template-columns:1fr;} }
-
-  .entry-card{
-    position:relative;
+  .hub-btn{
+    position:absolute;
+    width:19%;
+    aspect-ratio:1;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
     background:var(--card);
     border:1px solid var(--grid-line);
-    border-radius:4px;
-    padding:28px 22px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
     text-decoration:none;
-    display:flex; flex-direction:column; gap:14px;
-    min-height:220px;
-    transition:transform .35s ease, border-color .35s, background .35s;
-    overflow:hidden;
+    text-align:center;
+    gap:2px;
+    transition:transform .3s ease, border-color .3s, background .3s;
+    padding:6px;
   }
-  .entry-card::before{
-    content:''; position:absolute; inset:0; opacity:0; transition:opacity .35s;
-    background:radial-gradient(circle at 30% 0%, rgba(255,203,5,0.14), transparent 60%);
+  .hub-btn:hover{
+    transform:translate(-50%,-50%) scale(1.08);
+    border-color:var(--poke-yellow);
+    background:#1f1a26;
   }
-  .entry-card:hover{transform:translateY(-6px); border-color:var(--poke-yellow);}
-  .entry-card:hover::before{opacity:1;}
-  .entry-card .num{
-    font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:1px;
-  }
-  .entry-card .icon{font-size:30px; line-height:1;}
-  .entry-card h3{font-family:'Anton',sans-serif; font-size:19px; line-height:1.15; position:relative; z-index:1;}
-  .entry-card p{font-size:12.5px; color:var(--muted); line-height:1.6; position:relative; z-index:1; flex:1;}
-  .entry-card .go{
-    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:1.5px; color:var(--poke-yellow);
-    display:flex; align-items:center; gap:8px; position:relative; z-index:1;
+  .hub-btn .hub-icon{font-size:clamp(30px,3.9vw,39px); line-height:1;}
+  .hub-btn .hub-label{
+    font-family:'Space Mono',monospace;
+    font-size:clamp(8.5px,1vw,10.5px);
+    letter-spacing:0.5px;
+    color:var(--bone);
+    line-height:1.15;
+    max-width:90%;
   }
 
-  /* ---------- TICKER ---------- */
-  .ticker-wrap{
-    background:var(--poke-yellow); overflow:hidden; white-space:nowrap; padding:13px 0;
-    border-top:1px solid var(--void); border-bottom:1px solid var(--void);
+  @media (max-width:560px){
+    .hub-btn{width:27%;}
   }
-  .ticker{
-    display:inline-block; font-family:'Space Mono',monospace; font-size:12.5px; letter-spacing:2px;
-    text-transform:uppercase; color:var(--void); animation:tick 24s linear infinite;
-  }
-  @keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-  .ticker span{margin:0 26px;}
 </style>
 </head>
 <body>
@@ -184,101 +71,90 @@
 <div class="noise-layer"></div>
 
 <header>
-  <a href="index.html" class="logo"><span class="ball"></span>MYSYZ<span>CHANNAL</span></a>
+  <a href="index.html" class="logo"><span class="ball"></span>MYSYZ<span>CHANNEL</span></a>
   <button class="menu-toggle" aria-label="เปิดเมนู" onclick="document.querySelector('.mainnav').classList.toggle('open')">☰</button>
   <nav class="mainnav">
     <a href="index.html" class="active">หน้าแรก</a>
     <a href="news.html">ข่าว/อัปเดต</a>
-    <a href="guide.html">ไกด์/วิธีเล่น</a>
     <a href="pokedex.html">Pokédex</a>
-    <a href="community-day.html">Community Day</a>
     <a href="fast-moves.html">ท่าตีไว</a>
     <a href="contact.html">ติดต่อเรา</a>
   </nav>
 </header>
 
-<section class="entry-section">
-  <div class="section-head">
+<section class="hub-section">
+  <div class="section-head" style="max-width:600px; width:100%;">
     <h2>สำรวจช่องของเรา</h2>
     <p>เลือกหมวดที่สนใจ แต่ละหมวดอัปเดตข้อมูลแยกกันชัดเจน</p>
   </div>
 
-  <div class="entry-grid">
+  <div class="hub-wrap">
+    <svg class="hub-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <path id="arcTop" d="M 210.73,267.51 A 95,95 0 0 1 389.27,267.51" fill="none"/>
+        <path id="arcBottom" d="M 210.73,332.49 A 95,95 0 0 0 389.27,332.49" fill="none"/>
+      </defs>
 
-    <a href="news.html" class="entry-card">
-      <span class="num">01</span>
-      <span class="icon">📡</span>
-      <h3>ข่าว/อัปเดตเกม</h3>
-      <p>ความเคลื่อนไหว แพตช์ใหม่ และอีเวนต์ที่กำลังจะมาถึง</p>
-      <span class="go">เข้าดู →</span>
-    </a>
+      <!-- connecting spokes -->
+      <g stroke="rgba(255,203,5,0.15)" stroke-width="1.5">
+        <line x1="300" y1="300" x2="300" y2="52"/>
+        <line x1="300" y1="300" x2="514.8" y2="176"/>
+        <line x1="300" y1="300" x2="514.8" y2="424"/>
+        <line x1="300" y1="300" x2="300" y2="548"/>
+        <line x1="300" y1="300" x2="85.2" y2="424"/>
+        <line x1="300" y1="300" x2="85.2" y2="176"/>
+      </g>
 
-    <a href="guide.html" class="entry-card">
-      <span class="num">02</span>
-      <span class="icon">🧭</span>
-      <h3>ไกด์/วิธีเล่น</h3>
-      <p>พื้นฐานการเล่น เทคนิคจับโปเกมอน และการดูแลทีม</p>
-      <span class="go">เข้าดู →</span>
-    </a>
+      <!-- Poke Ball -->
+      <circle cx="300" cy="300" r="125" fill="#15101c" stroke="var(--poke-yellow)" stroke-width="3"/>
+      <path d="M 175,300 A 125,125 0 0 1 425,300" fill="#1f1a26" stroke="var(--poke-yellow)" stroke-width="3"/>
+      <rect x="175" y="296" width="250" height="8" fill="var(--void-2)" stroke="var(--poke-yellow)" stroke-width="3"/>
+      <circle cx="300" cy="300" r="34" fill="#15101c" stroke="var(--poke-yellow)" stroke-width="4"/>
+      <circle cx="300" cy="300" r="14" fill="var(--void)" stroke="var(--poke-yellow)" stroke-width="3"/>
 
-    <a href="pokedex.html" class="entry-card">
-      <span class="num">03</span>
-      <span class="icon">📘</span>
-      <h3>Pokédex</h3>
-      <p>ฐานข้อมูลโปเกมอนที่พบได้ในเกม พร้อมรายละเอียดประเภท</p>
-      <span class="go">เข้าดู →</span>
-    </a>
+      <!-- Curved title, overlapping the pokeball face -->
+      <text font-family="Anton, sans-serif" font-size="42" letter-spacing="3" fill="#f3efe6" stroke="#0c0a10" stroke-width="4" paint-order="stroke" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.6));">
+        <textPath href="#arcTop" startOffset="50%" text-anchor="middle">MYSYZ</textPath>
+      </text>
+      <text font-family="Anton, sans-serif" font-size="42" letter-spacing="3" fill="var(--poke-yellow)" stroke="#0c0a10" stroke-width="4" paint-order="stroke" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.6));">
+        <textPath href="#arcBottom" startOffset="50%" text-anchor="middle">CHANNEL</textPath>
+      </text>
+    </svg>
 
-    <a href="community-day.html" class="entry-card">
-      <span class="num">04</span>
-      <span class="icon">🗓️</span>
-      <h3>Community Day</h3>
-      <p>ตารางอีเวนต์รายเดือนและโบนัสพิเศษที่ไม่ควรพลาด</p>
-      <span class="go">เข้าดู →</span>
-    </a>
-
-    <a href="fast-moves.html" class="entry-card">
-      <span class="num">05</span>
-      <span class="icon">⚡</span>
-      <h3>ท่าตีไว</h3>
-      <p>จัดอันดับท่าตีไวตามพลังงานต่อครั้ง ทั้งโหมด PvP และ PvE</p>
-      <span class="go">เข้าดู →</span>
-    </a>
-
-    <a href="rank200.html" class="entry-card">
-      <span class="num">06</span>
-      <span class="icon">🏆</span>
-      <h3>Rank200</h3>
-      <p>อันดับโปเกมอนยอดนิยม 200 ตัวแรกสำหรับลีก CP 1500</p>
-      <span class="go">เข้าดู →</span>
-    </a>
-
-    <a href="all-pokemon-pvp.html" class="entry-card">
-      <span class="num">07</span>
-      <span class="icon">🛡️</span>
-      <h3>All Pokémon PVP</h3>
-      <p>ฐานข้อมูลอันดับโปเกมอนทั้งหมดสำหรับการต่อสู้ PvP แบบละเอียด</p>
-      <span class="go">เข้าดู →</span>
-    </a>
-
-    <a href="contact.html" class="entry-card">
-      <span class="num">08</span>
-      <span class="icon">✉️</span>
-      <h3>ติดต่อเรา</h3>
-      <p>ส่งคำถาม ข้อเสนอแนะ หรือร่วมงานกับทีมช่อง</p>
-      <span class="go">เข้าดู →</span>
-    </a>
-
+    <nav class="hub-nav" aria-label="เมนูหมวดหมู่">
+      <a href="news.html" class="hub-btn" style="top:8.67%; left:50%;">
+        <span class="hub-icon">📡</span>
+        <span class="hub-label">ข่าว/อัปเดต</span>
+      </a>
+      <a href="all-pokemon-pvp.html" class="hub-btn" style="top:29.33%; left:85.8%;">
+        <span class="hub-icon">🛡️</span>
+        <span class="hub-label">All Pokémon PVP</span>
+      </a>
+      <a href="rank200.html" class="hub-btn" style="top:70.67%; left:85.8%;">
+        <span class="hub-icon">🏆</span>
+        <span class="hub-label">Rank200</span>
+      </a>
+      <a href="contact.html" class="hub-btn" style="top:91.33%; left:50%;">
+        <span class="hub-icon">✉️</span>
+        <span class="hub-label">ติดต่อเรา</span>
+      </a>
+      <a href="fast-moves.html" class="hub-btn" style="top:70.67%; left:14.2%;">
+        <span class="hub-icon">⚡</span>
+        <span class="hub-label">ท่าตีไว</span>
+      </a>
+      <a href="pokedex.html" class="hub-btn" style="top:29.33%; left:14.2%;">
+        <span class="hub-icon">📘</span>
+        <span class="hub-label">Pokédex</span>
+      </a>
+    </nav>
   </div>
 </section>
 
 <footer>
-  <span>© 2026 MySyz Channal — Pokémon GO Concept Page</span>
+  <span>© 2026 MySyz Channel — Pokémon GO Concept Page</span>
   <div class="fl">
     <a href="news.html">ข่าว</a>
-    <a href="guide.html">ไกด์</a>
     <a href="pokedex.html">Pokédex</a>
-    <a href="community-day.html">Community Day</a>
     <a href="fast-moves.html">ท่าตีไว</a>
     <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
     <a href="rank200.html">Rank200</a>
