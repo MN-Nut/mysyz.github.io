@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ข่าว/อัปเดตเกม — MySyz Channel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Sarabun:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .month-nav{
+    display:flex; gap:10px; margin-bottom:40px; flex-wrap:wrap;
+  }
+  .month-nav a{
+    font-family:'Space Mono',monospace; font-size:12px; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--muted); text-decoration:none; padding:10px 20px; border:1px solid var(--grid-line);
+    border-radius:100px; transition:all .2s;
+  }
+  .month-nav a:hover{border-color:var(--poke-yellow); color:var(--bone);}
+
+  .month-block{margin-bottom:72px;}
+  .month-head{
+    display:flex; align-items:baseline; gap:16px; margin-bottom:8px;
+    border-bottom:1px solid var(--grid-line); padding-bottom:18px;
+  }
+  .month-head h2{font-family:'Anton',sans-serif; font-size:clamp(26px,3.6vw,38px);}
+  .month-head .month-en{
+    font-family:'Space Mono',monospace; font-size:12px; letter-spacing:2px; color:var(--poke-yellow);
+    text-transform:uppercase;
+  }
+
+  .event-grid{display:grid; grid-template-columns:1fr; gap:22px; margin-top:28px;}
+
+  .event-card{
+    display:grid;
+    grid-template-columns:240px 1fr;
+    gap:0;
+    background:var(--card);
+    border:1px solid var(--grid-line);
+    border-radius:6px;
+    overflow:hidden;
+    transition:border-color .3s, transform .3s;
+  }
+  .event-card:hover{border-color:var(--poke-yellow); transform:translateY(-3px);}
+  @media (max-width:760px){
+    .event-card{grid-template-columns:1fr;}
+  }
+
+  .event-art{
+    background:var(--void-2);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+    position:relative;
+    min-height:180px;
+  }
+  .event-art svg{width:100%; height:140px;}
+
+  .event-body{padding:26px 28px;}
+  .event-meta{
+    display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;
+  }
+  .event-date{
+    font-family:'Space Mono',monospace; font-size:11px; color:var(--poke-yellow);
+    letter-spacing:1.5px; text-transform:uppercase;
+  }
+  .event-tag{
+    font-family:'Space Mono',monospace; font-size:9.5px; letter-spacing:1px; text-transform:uppercase;
+    padding:3px 10px; border-radius:100px; border:1px solid var(--grid-line); color:var(--muted);
+  }
+  .event-tag.t-gofest{border-color:rgba(255,203,5,0.4); color:var(--poke-yellow);}
+  .event-tag.t-cd{border-color:rgba(94,176,82,0.4); color:#7bc96a;}
+  .event-tag.t-raid{border-color:rgba(227,53,13,0.4); color:#ff7a52;}
+  .event-tag.t-debut{border-color:rgba(120,100,170,0.4); color:#a594db;}
+  .event-tag.t-anniv{border-color:rgba(240,170,210,0.4); color:#f0aad2;}
+
+  .event-body h3{font-family:'Anton',sans-serif; font-size:20px; margin-bottom:8px; line-height:1.25;}
+  .event-body p{font-size:13.5px; color:var(--muted); line-height:1.7;}
+  .event-extra{
+    margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .event-pill{
+    font-family:'Space Mono',monospace; font-size:10.5px; color:var(--bone);
+    background:rgba(255,203,5,0.06); border:1px solid rgba(255,203,5,0.25);
+    padding:5px 12px; border-radius:100px;
+  }
+</style>
+</head>
+<body>
+
+<div class="noise-layer"></div>
+
+<header>
+  <a href="index.html" class="logo"><span class="ball"></span>MYSYZ<span>CHANNEL</span></a>
+  <button class="menu-toggle" aria-label="เปิดเมนู" onclick="document.querySelector('.mainnav').classList.toggle('open')">☰</button>
+  <nav class="mainnav">
+    <a href="index.html">หน้าแรก</a>
+    <a href="news.html" class="active">ข่าว/อัปเดต</a>
+    <a href="pokedex.html">Pokédex</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </nav>
+</header>
+
+<div class="coordbar">
+  <a href="index.html">หน้าแรก</a><span>/</span><span class="here">ข่าว/อัปเดตเกม</span>
+  <div class="dotline"></div>
+  <span>JUNE – JULY 2026</span>
+</div>
+
+<section class="page-hero">
+  <p class="tag">📡 Event Calendar</p>
+  <h1>ข่าว &amp; กิจกรรมเกม</h1>
+  <p class="lead">รวมกิจกรรม Pokémon GO ประจำเดือนมิถุนายนและกรกฎาคม 2026 ตั้งแต่ GO Fest, Community Day, ไปจนถึงการเปิดตัวโปเกมอนและ Mega ตัวใหม่</p>
+</section>
+
+<section class="section">
+
+  <div class="month-nav">
+    <a href="#june">→ มิถุนายน 2026</a>
+    <a href="#july">→ กรกฎาคม 2026</a>
+  </div>
+
+  <!-- ===================== JUNE ===================== -->
+  <div class="month-block" id="june">
+    <div class="month-head">
+      <h2>มิถุนายน 2026</h2>
+      <span class="month-en">June</span>
+    </div>
+
+    <div class="event-grid">
+
+      <!-- GO Fest Chicago -->
+      <article class="event-card">
+        <div class="event-art">
+          <svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gradChicago" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffcb05"/>
+                <stop offset="100%" stop-color="#e3350d"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="240" height="140" fill="#15101c"/>
+            <g opacity="0.9">
+              <rect x="30" y="50" width="18" height="70" fill="#2a2530"/>
+              <rect x="55" y="30" width="22" height="90" fill="#2a2530"/>
+              <rect x="84" y="60" width="16" height="60" fill="#2a2530"/>
+              <rect x="150" y="45" width="20" height="75" fill="#2a2530"/>
+              <rect x="176" y="65" width="16" height="55" fill="#2a2530"/>
+            </g>
+            <circle cx="120" cy="62" r="34" fill="url(#gradChicago)" opacity="0.92"/>
+            <circle cx="120" cy="62" r="34" fill="none" stroke="#fff" stroke-width="2" opacity="0.5"/>
+            <circle cx="120" cy="62" r="10" fill="#15101c"/>
+            <g stroke="#ffcb05" stroke-width="1.5" opacity="0.6">
+              <line x1="120" y1="20" x2="120" y2="8"/>
+              <line x1="150" y1="35" x2="158" y2="26"/>
+              <line x1="90" y1="35" x2="82" y2="26"/>
+            </g>
+          </svg>
+        </div>
+        <div class="event-body">
+          <div class="event-meta">
+            <span class="event-date">5–7 มิ.ย. 2026</span>
+            <span class="event-tag t-gofest">GO Fest</span>
+          </div>
+          <h3>Pokémon GO Fest 2026: Chicago</h3>
+          <p>อีเวนต์ใหญ่ประจำปีที่ Grant Park ผู้ถือตั๋วจะได้พบกับสปอว์นพิเศษ เรดเฉพาะกิจ และโบนัสเต็มสามวัน พร้อมเปิดตัว Mega Mewtwo X, Mega Mewtwo Y และ Zeraora เป็นครั้งแรกในเกม รวมถึง Shiny Paldean Tauros</p>
+          <div class="event-extra">
+            <span class="event-pill">Mega Mewtwo X/Y เปิดตัว</span>
+            <span class="event-pill">Zeraora เปิดตัว</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- GO Fest Copenhagen -->
+      <article class="event-card">
+        <div class="event-art">
+          <svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gradCph" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#5fa8e0"/>
+                <stop offset="100%" stop-color="#7bc96a"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="240" height="140" fill="#15101c"/>
+            <path d="M 0,100 Q 60,75 120,95 T 240,90 L 240,140 L 0,140 Z" fill="#1c3a2e" opacity="0.7"/>
+            <circle cx="120" cy="58" r="32" fill="url(#gradCph)" opacity="0.9"/>
+            <circle cx="120" cy="58" r="32" fill="none" stroke="#fff" stroke-width="2" opacity="0.5"/>
+            <circle cx="120" cy="58" r="9" fill="#15101c"/>
+            <g fill="#ffcb05" opacity="0.8">
+              <circle cx="70" cy="40" r="3"/>
+              <circle cx="178" cy="34" r="2.5"/>
+              <circle cx="195" cy="55" r="2"/>
+            </g>
+          </svg>
+        </div>
+        <div class="event-body">
+          <div class="event-meta">
+            <span class="event-date">12–14 มิ.ย. 2026</span>
+            <span class="event-tag t-gofest">GO Fest</span>
+          </div>
+          <h3>Pokémon GO Fest 2026: Copenhagen</h3>
+          <p>ต่อเนื่องจาก Chicago อีเวนต์ที่ Fælledparken เมืองโคเปนเฮเกน ผู้ถือตั๋วได้รับสปอว์นและเรดพิเศษเฉพาะอีเวนต์เช่นเดียวกัน พร้อมโอกาสพบ Mega Mewtwo X/Y และ Zeraora ที่เพิ่งเปิดตัว</p>
+          <div class="event-extra">
+            <span class="event-pill">สปอว์นพิเศษเฉพาะอีเวนต์</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Frigibax Community Day -->
+      <article class="event-card">
+        <div class="event-art">
+          <svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gradFrigi" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#8fe0e8"/>
+                <stop offset="100%" stop-color="#5fa8e0"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="240" height="140" fill="#15101c"/>
+            <g opacity="0.5" stroke="#8fe0e8" stroke-width="1.5">
+              <path d="M120,30 L120,90 M95,40 L145,80 M145,40 L95,80"/>
+              <path d="M60,100 L60,130 M48,108 L72,122 M72,108 L48,122"/>
+              <path d="M180,95 L180,125 M168,103 L192,117 M192,103 L168,117"/>
+            </g>
+            <polygon points="120,38 145,62 120,86 95,62" fill="url(#gradFrigi)" opacity="0.92"/>
+            <polygon points="120,38 145,62 120,86 95,62" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="event-body">
+          <div class="event-meta">
+            <span class="event-date">20 มิ.ย. 2026 · 14:00–17:00</span>
+            <span class="event-tag t-cd">Community Day</span>
+          </div>
+          <h3>Frigibax Community Day</h3>
+          <p>Frigibax มังกรน้ำแข็งจะปรากฏตัวถี่ขึ้นมากในช่วงอีเวนต์ พร้อมโอกาสเจอ Shiny สูงขึ้น หากวิวัฒนาการเป็น Baxcalibur ภายในงานหรือภายใน 4 ชั่วโมงหลังจบ จะได้ท่าพิเศษ Glaive Rush ติดตัว</p>
+          <div class="event-extra">
+            <span class="event-pill">ฝุ่นดาว x3</span>
+            <span class="event-pill">แคนดี้ x2</span>
+            <span class="event-pill">ท่าพิเศษ Glaive Rush</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Flying Taxi -->
+      <article class="event-card">
+        <div class="event-art">
+          <svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gradFly" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#9fc2f0"/>
+                <stop offset="100%" stop-color="#f0aad2"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="240" height="140" fill="#15101c"/>
+            <g opacity="0.85">
+              <path d="M100,70 Q120,40 160,55 Q150,70 160,85 Q120,100 100,70 Z" fill="url(#gradFly)"/>
+              <path d="M70,65 Q85,55 100,70 Q85,80 70,65 Z" fill="url(#gradFly)" opacity="0.7"/>
+            </g>
+            <circle cx="135" cy="68" r="4" fill="#15101c"/>
+            <g stroke="#9fc2f0" stroke-width="1.2" opacity="0.4">
+              <path d="M40,40 Q60,30 80,40"/>
+              <path d="M160,100 Q180,90 200,100"/>
+            </g>
+          </svg>
+        </div>
+        <div class="event-body">
+          <div class="event-meta">
+            <span class="event-date">23–29 มิ.ย. 2026</span>
+            <span class="event-tag t-debut">Debut</span>
+          </div>
+          <h3>Flying Taxi — Squawkabilly เปิดตัว</h3>
+          <p>Squawkabilly เปิดตัวพร้อมรูปแบบสีขนทั้ง 4 แบบตามภูมิภาค โปเกมอนธาตุบินจะปรากฏตัวถี่ขึ้นทั้งแมพ ตามด้วยอีเวนต์ Team GO Rocket Takeover "Flying Taxi: Taken Over" ที่เปิดตัว Shadow Reshiram ในวันที่ 25–29 มิ.ย.</p>
+          <div class="event-extra">
+            <span class="event-pill">Squawkabilly เปิดตัว</span>
+            <span class="event-pill">Shadow Reshiram เปิดตัว</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Mega Skarmory Raid Day -->
+      <article class="event-card">
+        <div class="event-art">
+          <svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gradSkarm" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#bcc3c9"/>
+                <stop offset="100%" stop-color="#5c5468"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="240" height="140" fill="#15101c"/>
+            <path d="M120,30 L150,55 L140,90 L120,75 L100,90 L90,55 Z" fill="url(#gradSkarm)" opacity="0.92"/>
+            <path d="M120,30 L150,55 L140,90 L120,75 L100,90 L90,55 Z" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
+            <circle cx="120" cy="58" r="8" fill="#15101c"/>
+            <g stroke="#ffcb05" stroke-width="2" opacity="0.7">
+              <line x1="60" y1="40" x2="75" y2="48"/>
+              <line x1="180" y1="40" x2="165" y2="48"/>
+            </g>
+          </svg>
+        </div>
+        <div class="event-body">
+          <div class="event-meta">
+            <span class="event-date">27 มิ.ย. 2026 · 14:00–17:00</span>
+            <span class="event-tag t-raid">Raid Day</span>
+          </div>
+          <h3>Super Mega Raid Day: Mega Skarmory</h3>
+          <p>Mega Skarmory เปิดตัวครั้งแรกในเกม ปรากฏตัวใน Super Mega Raid พร้อมโอกาส Shiny ที่เพิ่มขึ้น และแจกตั๋วเรดฟรีเพิ่มสูงสุด 5 ใบสำหรับวันนี้โดยเฉพาะ</p>
+          <div class="event-extra">
+            <span class="event-pill">Mega Skarmory เปิดตัว</span>
+            <span class="event-pill">ตั๋วเรดฟรี x5</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- ===================== JULY ===================== -->
+  <div class="month-block" id="july">
+    <div class="month-head">
+      <h2>กรกฎาคม 2026</h2>
+      <span class="month-en">July</span>
+    </div>
+
+    <div class="event-grid">
+
+      <!-- Sobble Community Day -->
+      <article class="event-card">
+        <div class="event-art">
+          <svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gradSobble" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#5fa8e0"/>
+                <stop offset="100%" stop-color="#2a75bb"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="240" height="140" fill="#15101c"/>
+            <path d="M120,32 C140,32 152,48 152,66 C152,86 138,98 120,98 C102,98 88,86 88,66 C88,48 100,32 120,32 Z" fill="url(#gradSobble)" opacity="0.92"/>
+            <path d="M120,32 C140,32 152,48 152,66 C152,86 138,98 120,98 C102,98 88,86 88,66 C88,48 100,32 120,32 Z" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
+            <g opacity="0.6" stroke="#8fe0e8" stroke-width="1.5" fill="none">
+              <circle cx="60" cy="40" r="6"/>
+              <circle cx="190" cy="100" r="8"/>
+              <circle cx="195" cy="35" r="4"/>
+            </g>
+          </svg>
+        </div>
+        <div class="event-body">
+          <div class="event-meta">
+            <span class="event-date">4 ก.ค. 2026 · 14:00–17:00</span>
+            <span class="event-tag t-cd">Community Day</span>
+          </div>
+          <h3>Sobble Community Day</h3>
+          <p>Sobble ปิดไตรภาคสตาร์ตเตอร์ Galar ของปี 2026 ปรากฏตัวถี่ขึ้นมากพร้อมโอกาส Shiny สูง หากวิวัฒนาการเป็น Inteleon ในช่วงอีเวนต์หรือภายใน 4 ชั่วโมงหลังจบ จะได้ท่า Hydro Cannon ติดตัว และต่อจากนี้ Inteleon ทุกตัวจะเรียนท่า Snipe Shot ได้</p>
+          <div class="event-extra">
+            <span class="event-pill">แคนดี้ x2</span>
+            <span class="event-pill">ระยะฟักไข่ 1/4</span>
+            <span class="event-pill">ท่าพิเศษ Hydro Cannon</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 10th Anniversary Party -->
+      <article class="event-card">
+        <div class="event-art">
+          <svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="gradAnniv" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#fff3c4"/>
+                <stop offset="100%" stop-color="#ffcb05"/>
+              </radialGradient>
+            </defs>
+            <rect x="0" y="0" width="240" height="140" fill="#15101c"/>
+            <circle cx="120" cy="62" r="36" fill="url(#gradAnniv)" opacity="0.95"/>
+            <circle cx="120" cy="62" r="36" fill="none" stroke="#e3350d" stroke-width="2"/>
+            <text x="120" y="72" font-family="Anton, sans-serif" font-size="30" fill="#15101c" text-anchor="middle">10</text>
+            <g stroke="#f0aad2" stroke-width="2" opacity="0.7">
+              <path d="M70,110 Q90,95 105,108"/>
+              <path d="M170,110 Q150,95 135,108"/>
+            </g>
+          </svg>
+        </div>
+        <div class="event-body">
+          <div class="event-meta">
+            <span class="event-date">4–6 ก.ค. 2026</span>
+            <span class="event-tag t-anniv">Anniversary</span>
+          </div>
+          <h3>10th Anniversary Party</h3>
+          <p>ฉลองครบรอบ 10 ปีของเกม เปิดตัว Gimmighoul ที่ถือเหรียญครบรอบ 10 ปี พร้อมโอกาส Shiny พร้อมนำคอสตูมยอดนิยมกลับมา เช่น Cake Hat Pikachu, Party Hat Eevee และ Party Hat Wurmple ในช่วงอีเวนต์รับ XP และฝุ่นดาวจากการจับ x4</p>
+          <div class="event-extra">
+            <span class="event-pill">Gimmighoul เหรียญครบรอบ</span>
+            <span class="event-pill">XP และฝุ่นดาว x4</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Road of Legends -->
+      <article class="event-card">
+        <div class="event-art">
+          <svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gradRoad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#9aa3f0"/>
+                <stop offset="100%" stop-color="#a594db"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="240" height="140" fill="#15101c"/>
+            <path d="M30,120 Q120,40 210,120" fill="none" stroke="url(#gradRoad)" stroke-width="6" opacity="0.85"/>
+            <circle cx="30" cy="120" r="7" fill="#ffcb05"/>
+            <circle cx="120" cy="50" r="9" fill="#a594db"/>
+            <circle cx="210" cy="120" r="7" fill="#ffcb05"/>
+          </svg>
+        </div>
+        <div class="event-body">
+          <div class="event-meta">
+            <span class="event-date">6–10 ก.ค. 2026</span>
+            <span class="event-tag t-raid">Raid Event</span>
+          </div>
+          <h3>Road of Legends</h3>
+          <p>อีเวนต์เรดต่อเนื่อง 5 วัน หมุนเวียนบอสในตำนานและ Mega ระดับสูง เช่น Zekrom, Kyurem (White), Necrozma (Dawn Wings) และ Mega Tyranitar พร้อม Raid Hour เฉพาะกิจในแต่ละวัน</p>
+          <div class="event-extra">
+            <span class="event-pill">Raid Hour ทุกวัน</span>
+            <span class="event-pill">บอสในตำนานหมุนเวียน</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Raichu Mega Raid Day -->
+      <article class="event-card">
+        <div class="event-art">
+          <svg viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gradRaichu" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fff3c4"/>
+                <stop offset="100%" stop-color="#ffcb05"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="240" height="140" fill="#15101c"/>
+            <polygon points="125,28 105,68 122,68 112,108 148,58 128,58" fill="url(#gradRaichu)" opacity="0.95"/>
+            <polygon points="125,28 105,68 122,68 112,108 148,58 128,58" fill="none" stroke="#e3350d" stroke-width="1.5" opacity="0.5"/>
+            <g opacity="0.4" stroke="#ffcb05" stroke-width="1.5">
+              <line x1="50" y1="40" x2="65" y2="50"/>
+              <line x1="190" y1="40" x2="175" y2="50"/>
+              <line x1="50" y1="110" x2="65" y2="100"/>
+              <line x1="190" y1="110" x2="175" y2="100"/>
+            </g>
+          </svg>
+        </div>
+        <div class="event-body">
+          <div class="event-meta">
+            <span class="event-date">กรกฎาคม 2026</span>
+            <span class="event-tag t-debut">Debut</span>
+          </div>
+          <h3>Super Mega Raid Day: Raichu</h3>
+          <p>เปิดตัว Mega Raichu X และ Mega Raichu Y เป็นครั้งแรกในเกม หนึ่งในอีเวนต์เรดที่ถูกรอคอยมากที่สุดของเดือน พร้อม Timed Research ฟรีและไอเทมพิเศษระหว่างอีเวนต์</p>
+          <div class="event-extra">
+            <span class="event-pill">Mega Raichu X เปิดตัว</span>
+            <span class="event-pill">Mega Raichu Y เปิดตัว</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <span>© 2026 MySyz Channel — Pokémon GO Concept Page</span>
+  <div class="fl">
+    <a href="index.html">หน้าแรก</a>
+    <a href="pokedex.html">Pokédex</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </div>
+</footer>
+
+</body>
+</html>

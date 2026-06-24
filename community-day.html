@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Day — MySyz Channel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Sarabun:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .cd-hero-card{
+    max-width:760px; background:var(--card); border:1px solid var(--poke-yellow);
+    border-radius:6px; padding:36px; position:relative; overflow:hidden;
+  }
+  .cd-hero-card::before{
+    content:''; position:absolute; inset:0; opacity:0.5;
+    background:radial-gradient(circle at 90% 0%, rgba(255,203,5,0.15), transparent 60%);
+  }
+  .cd-hero-card .cd-date{
+    font-family:'Space Mono',monospace; font-size:12px; letter-spacing:2px; color:var(--poke-yellow);
+    text-transform:uppercase; position:relative; z-index:1;
+  }
+  .cd-hero-card h2{font-family:'Anton',sans-serif; font-size:clamp(26px,4vw,38px); margin:12px 0; position:relative; z-index:1;}
+  .cd-hero-card p{color:#bbb4c2; font-size:14.5px; line-height:1.7; max-width:520px; position:relative; z-index:1;}
+  .cd-bonus-list{margin-top:22px; display:flex; gap:14px; flex-wrap:wrap; position:relative; z-index:1;}
+  .cd-bonus{
+    font-family:'Space Mono',monospace; font-size:11.5px; color:var(--bone);
+    background:rgba(255,203,5,0.08); border:1px solid rgba(255,203,5,0.3);
+    padding:8px 14px; border-radius:100px;
+  }
+
+  .cd-timeline{display:flex; flex-direction:column; gap:0; max-width:760px; margin-top:8px;}
+  .cd-row{
+    display:grid; grid-template-columns:120px 1fr; gap:20px;
+    padding:22px 0; border-bottom:1px solid var(--grid-line);
+  }
+  .cd-row:last-child{border-bottom:none;}
+  .cd-month{font-family:'Anton',sans-serif; font-size:16px; color:var(--poke-yellow);}
+  .cd-row h4{font-family:'Anton',sans-serif; font-size:17px; margin-bottom:6px;}
+  .cd-row p{font-size:13px; color:var(--muted); line-height:1.6;}
+</style>
+</head>
+<body>
+
+<div class="noise-layer"></div>
+
+<header>
+  <a href="index.html" class="logo"><span class="ball"></span>MYSYZ<span>CHANNEL</span></a>
+  <button class="menu-toggle" aria-label="เปิดเมนู" onclick="document.querySelector('.mainnav').classList.toggle('open')">☰</button>
+  <nav class="mainnav">
+    <a href="index.html">หน้าแรก</a>
+    <a href="news.html">ข่าว/อัปเดต</a>
+    <a href="guide.html">ไกด์/วิธีเล่น</a>
+    <a href="pokedex.html">Pokédex</a>
+    <a href="community-day.html" class="active">Community Day</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </nav>
+</header>
+
+<div class="coordbar">
+  <a href="index.html">หน้าแรก</a><span>/</span><span class="here">Community Day</span>
+  <div class="dotline"></div>
+  <span>EVENT SCHEDULE</span>
+</div>
+
+<section class="page-hero">
+  <p class="tag">🗓️ Monthly Event</p>
+  <h1>Community Day</h1>
+  <p class="lead">อีเวนต์รายเดือนที่รวมเทรนเนอร์ทุกคนออกมาล่าโปเกมอนพร้อมกัน พร้อมโบนัสพิเศษเฉพาะช่วงเวลาจำกัด</p>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>อีเวนต์เดือนนี้</h2>
+    <p>อย่าลืมเคลียร์ตารางวันนี้ไว้ล่วงหน้า</p>
+  </div>
+
+  <div class="cd-hero-card">
+    <div class="cd-date">วันเสาร์ที่ 27 มิถุนายน 2026 · 11:00–14:00</div>
+    <h2>โวลตี้เม้าส์ ออกอาละวาดทั่วเมือง</h2>
+    <p>โปเกมอนไฟฟ้าประจำอีเวนต์จะปรากฏตัวถี่กว่าปกติ จับได้ในช่วงเวลาที่กำหนดเท่านั้น พร้อมท่าพิเศษเฉพาะอีเวนต์เมื่อวิวัฒนาการในช่วงเวลานี้</p>
+    <div class="cd-bonus-list">
+      <span class="cd-bonus">⭐ ฝุ่นดาว x3</span>
+      <span class="cd-bonus">🥚 ระยะฟักไข่ลดครึ่ง</span>
+      <span class="cd-bonus">🎯 โบนัสจับสำเร็จเพิ่ม</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--void-2);">
+  <div class="section-head">
+    <h2>ตารางย้อนหลัง</h2>
+    <p>ดูว่าผ่านมาแล้วมีอีเวนต์ไหนบ้าง</p>
+  </div>
+
+  <div class="cd-timeline">
+    <div class="cd-row">
+      <div class="cd-month">พ.ค. 2026</div>
+      <div>
+        <h4>เฟลมซอรัส เดือนแห่งไฟ</h4>
+        <p>โบนัส XP จับสามตัวต่อเนื่องสองเท่า พร้อมท่าพิเศษเฉพาะอีเวนต์</p>
+      </div>
+    </div>
+    <div class="cd-row">
+      <div class="cd-month">เม.ย. 2026</div>
+      <div>
+        <h4>อะควาฟิน วันแห่งสายฝน</h4>
+        <p>อัตราเจอไข่หายากเพิ่มขึ้น และระยะการปฏิสัมพันธ์กับ PokéStop เพิ่มเป็นสองเท่า</p>
+      </div>
+    </div>
+    <div class="cd-row">
+      <div class="cd-month">มี.ค. 2026</div>
+      <div>
+        <h4>ลีฟสปราวท์ เทศกาลใบไม้</h4>
+        <p>โบนัสฝุ่นดาวเพิ่มขึ้นตลอดอีเวนต์ พร้อมเรดพิเศษช่วงเย็น</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 MySyz Channel — Pokémon GO Concept Page</span>
+  <div class="fl">
+    <a href="index.html">หน้าแรก</a>
+    <a href="news.html">ข่าว</a>
+    <a href="guide.html">ไกด์</a>
+    <a href="pokedex.html">Pokédex</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </div>
+</footer>
+
+</body>
+</html>

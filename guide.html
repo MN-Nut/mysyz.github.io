@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ไกด์/วิธีเล่น — MySyz Channel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Sarabun:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .steps{display:flex; flex-direction:column; gap:0; max-width:760px;}
+  .step{
+    display:grid; grid-template-columns:64px 1fr; gap:24px;
+    padding:30px 0; border-bottom:1px solid var(--grid-line);
+  }
+  .step:last-child{border-bottom:none;}
+  .step-num{font-family:'Anton',sans-serif; font-size:38px; color:var(--grid-line); -webkit-text-stroke:1px var(--poke-yellow); color:transparent;}
+  .step h3{font-family:'Anton',sans-serif; font-size:19px; margin-bottom:8px;}
+  .step p{font-size:13.5px; color:var(--muted); line-height:1.75; max-width:560px;}
+
+  .tip-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:880px){.tip-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:600px){.tip-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="noise-layer"></div>
+
+<header>
+  <a href="index.html" class="logo"><span class="ball"></span>MYSYZ<span>CHANNEL</span></a>
+  <button class="menu-toggle" aria-label="เปิดเมนู" onclick="document.querySelector('.mainnav').classList.toggle('open')">☰</button>
+  <nav class="mainnav">
+    <a href="index.html">หน้าแรก</a>
+    <a href="news.html">ข่าว/อัปเดต</a>
+    <a href="guide.html" class="active">ไกด์/วิธีเล่น</a>
+    <a href="pokedex.html">Pokédex</a>
+    <a href="community-day.html">Community Day</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </nav>
+</header>
+
+<div class="coordbar">
+  <a href="index.html">หน้าแรก</a><span>/</span><span class="here">ไกด์/วิธีเล่น</span>
+  <div class="dotline"></div>
+  <span>TRAINER LEVEL 01+</span>
+</div>
+
+<section class="page-hero">
+  <p class="tag">🧭 Trainer Guide</p>
+  <h1>เริ่มเล่นยังไงดี</h1>
+  <p class="lead">ปูพื้นฐานตั้งแต่ก้าวแรกในเกม ไปจนถึงเทคนิคที่ช่วยให้จับโปเกมอนได้แม่นขึ้นและดูแลทีมได้อย่างมีประสิทธิภาพ</p>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>4 ขั้นตอนเริ่มต้น</h2>
+    <p>ทำตามลำดับนี้ในสัปดาห์แรกที่เล่น</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div>
+        <h3>ตั้งค่าผู้เล่นและเลือกทีม</h3>
+        <p>สร้างตัวละคร ปรับค่าพื้นฐาน แล้วเลือกทีม (Mystic, Valor, Instinct) เพื่อใช้สำหรับเข้าร่วม Gym และกิจกรรมทีมในอนาคต</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div>
+        <h3>เดินสำรวจและเก็บ PokéStop</h3>
+        <p>เดินไปยัง PokéStop ใกล้ตัวเพื่อรับไอเทม เช่น Poké Ball, Potion และไข่ ซึ่งจำเป็นต่อการจับและฟักโปเกมอนใหม่</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div>
+        <h3>จับโปเกมอนตัวแรก</h3>
+        <p>เล็งวงแหวนจับให้พอดีกับขนาดที่แนะนำ แล้วโยน Poké Ball ตรงจังหวะวงแหวนหดเล็กสุดเพื่อเพิ่มโอกาสจับสำเร็จ</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div>
+        <h3>ฝึกฝนและอัปเกรดทีม</h3>
+        <p>ใช้ฝุ่นดาวและลูกอมเพื่ออัปเกรดพลังโปเกมอน แล้วพาทีมไปท้าทาย Gym หรือเข้าร่วม Raid กับผู้เล่นคนอื่น</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--void-2);">
+  <div class="section-head">
+    <h2>เคล็ดลับจับโปเกมอนแม่นขึ้น</h2>
+    <p>เทคนิคที่ผู้เล่นประจำใช้กันจริง</p>
+  </div>
+  <div class="tip-grid">
+    <div class="tile">
+      <span class="tile-tag">Curve ball</span>
+      <h3>โยนแบบวงโค้ง</h3>
+      <p>หมุนลูกบอลเป็นวงกลมก่อนโยนเพื่อรับโบนัส XP เพิ่มและฝึกความแม่นยำในการเล็ง</p>
+    </div>
+    <div class="tile">
+      <span class="tile-tag">Berry</span>
+      <h3>ใช้เบอร์รีก่อนจับ</h3>
+      <p>ให้ Razz Berry กับโปเกมอนก่อนโยนบอล จะช่วยให้วงแหวนจับนิ่งขึ้นและจับสำเร็จง่ายขึ้น</p>
+    </div>
+    <div class="tile">
+      <span class="tile-tag">Timing</span>
+      <h3>จับช่วงเข้าเล่นทุกวัน</h3>
+      <p>รับโบนัสเข้าเล่นต่อเนื่อง (Catch streak) ที่เพิ่มโอกาสเจอโปเกมอนหายากในแต่ละวัน</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 MySyz Channel — Pokémon GO Concept Page</span>
+  <div class="fl">
+    <a href="index.html">หน้าแรก</a>
+    <a href="news.html">ข่าว</a>
+    <a href="pokedex.html">Pokédex</a>
+    <a href="community-day.html">Community Day</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </div>
+</footer>
+
+</body>
+</html>
