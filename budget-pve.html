@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget PVE — MySyz Channel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Sarabun:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---- Type palette (dark-safe versions) ---- */
+  :root{
+    --t-normal:#a4a48a;  --t-fire:#e07040;   --t-water:#4d80c8;
+    --t-electric:#e0b93b;--t-grass:#5f9c4c;  --t-ice:#7fc6c2;
+    --t-fighting:#b34437;--t-poison:#8f4a9b; --t-ground:#c99a4a;
+    --t-flying:#8f8ce0;  --t-psychic:#e0578a;--t-bug:#8fa030;
+    --t-rock:#a08a3f;    --t-ghost:#7a60b8;  --t-dragon:#6b50e8;
+    --t-dark:#8a7060;    --t-steel:#9ba0b4;  --t-fairy:#e08fa0;
+  }
+
+  /* ---- Type quick-nav bar ---- */
+  .type-nav{
+    position:sticky; top:64px; z-index:40;
+    background:var(--void-2);
+    border-bottom:1px solid var(--grid-line);
+    display:flex; overflow-x:auto; gap:0;
+    scrollbar-width:none;
+    padding:0 clamp(20px,5vw,64px);
+  }
+  .type-nav::-webkit-scrollbar{display:none;}
+  .type-nav a{
+    flex:0 0 auto;
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase;
+    color:var(--muted); text-decoration:none;
+    padding:13px 14px;
+    border-right:1px solid var(--grid-line);
+    white-space:nowrap;
+    transition:color .2s, background .2s;
+    display:flex; align-items:center; gap:7px;
+  }
+  .type-nav a:hover{color:var(--bone); background:rgba(255,255,255,0.04);}
+  .type-dot{
+    display:inline-block; width:8px; height:8px; border-radius:50%;
+    flex-shrink:0;
+  }
+
+  /* ---- Type section ---- */
+  .type-section{
+    padding:48px clamp(20px,5vw,64px) 20px;
+    border-bottom:1px solid var(--grid-line);
+  }
+  .type-section:last-of-type{border-bottom:none;}
+
+  .type-head{
+    display:flex; align-items:center; gap:16px; margin-bottom:8px;
+    flex-wrap:wrap;
+  }
+  .type-chip{
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--void); padding:6px 16px; border-radius:100px; font-weight:700;
+    white-space:nowrap; flex-shrink:0;
+  }
+  .type-section h2{
+    font-family:'Anton',sans-serif; font-size:clamp(20px,2.6vw,26px);
+    color:var(--bone); margin:0;
+  }
+  .type-note{
+    font-size:13px; color:var(--muted); margin:6px 0 26px; max-width:70ch; line-height:1.6;
+  }
+
+  /* ---- Mon card grid ---- */
+  .mon-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+    gap:14px;
+    margin-bottom:28px;
+  }
+
+  .mon-card{
+    background:var(--card);
+    border:1px solid var(--grid-line);
+    border-radius:6px;
+    padding:18px;
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    position:relative;
+    transition:border-color .25s, transform .25s;
+  }
+  .mon-card:hover{border-color:var(--poke-yellow); transform:translateY(-3px);}
+
+  .mon-rank{
+    position:absolute; top:10px; right:12px;
+    font-family:'Space Mono',monospace; font-size:10px; color:var(--muted);
+    letter-spacing:1px;
+  }
+
+  .mon-avatar{
+    flex:0 0 auto;
+    width:64px; height:64px;
+    border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    position:relative;
+  }
+  .mon-avatar img{
+    width:100%; height:100%;
+    object-fit:contain;
+    image-rendering:pixelated;
+  }
+  .mon-avatar .fallback{
+    font-family:'Anton',sans-serif; font-size:18px; color:rgba(255,255,255,0.85);
+    letter-spacing:0.5px;
+  }
+
+  .mon-info{flex:1; min-width:0;}
+  .mon-name{
+    font-family:'Anton',sans-serif; font-size:17px; color:var(--bone);
+    margin:0 0 10px; line-height:1;
+  }
+  .mon-moves{
+    font-family:'Space Mono',monospace; font-size:11px; line-height:2;
+    color:var(--muted);
+    display:grid; grid-template-columns:58px 1fr; gap:0;
+  }
+  .move-lbl{
+    font-size:9.5px; letter-spacing:1px; text-transform:uppercase; color:var(--muted);
+    display:flex; align-items:center;
+  }
+  .move-fast{color:#7bc96a; font-weight:700;}
+  .move-charge{color:var(--bone); font-weight:700;}
+
+  /* ---- Disclaimer ---- */
+  .notice{
+    display:flex; gap:12px;
+    margin:0 clamp(20px,5vw,64px) 40px;
+    background:var(--card); border:1px solid var(--grid-line); border-radius:4px;
+    padding:18px 22px;
+    font-family:'Space Mono',monospace; font-size:11.5px; line-height:1.7; color:var(--muted);
+  }
+  .notice .icon{flex-shrink:0; font-size:16px; padding-top:2px;}
+
+  @media (max-width:640px){
+    .mon-grid{grid-template-columns:1fr;}
+    .type-nav a{padding:11px 10px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="noise-layer"></div>
+
+<header>
+  <a href="index.html" class="logo"><span class="ball"></span>MYSYZ<span>CHANNEL</span></a>
+  <button class="menu-toggle" aria-label="เปิดเมนู" onclick="document.querySelector('.mainnav').classList.toggle('open')">☰</button>
+  <nav class="mainnav">
+    <a href="index.html">หน้าแรก</a>
+    <a href="news.html">ข่าว/อัปเดต</a>
+    <a href="pokedex.html">Pokédex</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="budget-pve.html" class="active">Budget PVE</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </nav>
+</header>
+
+<div class="coordbar">
+  <a href="index.html">หน้าแรก</a><span>/</span><span class="here">Budget PVE</span>
+  <div class="dotline"></div>
+  <span>RAID ATTACKER GUIDE · 18 TYPES</span>
+</div>
+
+<section class="page-hero">
+  <p class="tag">⚔️ Raid Prep</p>
+  <h1>Budget Attackers ทุกธาตุ</h1>
+  <p class="lead">คู่มือโปเกมอนตีบอส (PvE Raid) แบบไม่ต้องพึ่ง Legendary หรือ Shadow แพงๆ จัดเรียงตามธาตุ พร้อม Fast Attack และ Charge Attack ที่แนะนำให้เลี้ยง</p>
+</section>
+
+<nav class="type-nav" id="type-nav" aria-label="เลื่อนไปยังธาตุ"></nav>
+
+<div class="notice">
+  <span class="icon">⚠️</span>
+  <span>ไอคอนโปเกมอนดึงจาก PokeAPI (open-source sprites) · มูฟเซ็ตอาจเปลี่ยนแปลงได้ตามการอัปเดตเกม แนะนำเช็คในเกมอีกครั้งก่อนลงทุน Stardust · ข้อมูลอ้างอิงจาก moveset ที่ค่อนข้างเสถียรในปี 2026</span>
+</div>
+
+<div id="type-content"></div>
+
+<footer>
+  <span>© 2026 MySyz Channel — Pokémon GO Concept Page</span>
+  <div class="fl">
+    <a href="index.html">หน้าแรก</a>
+    <a href="news.html">ข่าว</a>
+    <a href="pokedex.html">Pokédex</a>
+    <a href="fast-moves.html">ท่าตีไว</a>
+    <a href="all-pokemon-pvp.html">All Pokemon PVP</a>
+    <a href="rank200.html">Rank200</a>
+    <a href="contact.html">ติดต่อเรา</a>
+  </div>
+</footer>
+
+<script>
+const SPRITE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+
+// dex number map for sprite lookup
+const DEX = {
+  'Excadrill':530,'Rhyperior':464,'Garchomp':445,'Golem':76,
+  'Tyranitar':248,'Rampardos':409,'Omastar':139,
+  'Lucario':448,'Machamp':68,'Breloom':286,'Heracross':214,
+  'Charizard':6,'Chandelure':609,'Flareon':136,'Emboar':500,
+  'Feraligatr':160,'Swampert':260,'Gyarados':130,'Kingler':99,
+  'Raikou':243,'Electivire':466,'Luxray':405,'Zebstrika':523,
+  'Glaceon':471,'Mamoswine':473,'Jynx':124,'Weavile':461,
+  'Roserade':407,'Venusaur':3,'Leafeon':470,'Tangrowth':465,
+  'Nidoking':34,'Victreebel':71,'Gengar':94,
+  'Alakazam':65,'Metagross':376,'Gardevoir':282,'Espeon':196,
+  'Banette':354,'Trevenant':709,
+  'Hydreigon':635,'Houndoom':229,
+  'Salamence':373,'Flygon':330,'Dragonite':149,
+  'Togekiss':468,'Granbull':210,'Sylveon':700,
+  'Bastiodon':411,'Aggron':306,
+  'Volcarona':637,'Scizor':212,'Yanmega':469,
+  'Staraptor':398,'Honchkrow':430,
+  'Porygon-Z':474,'Snorlax':143,'Kangaskhan':115,'Regigigas':486,
+};
+
+const TYPES = [
+  { key:'ground', label:'Ground', color:'#c99a4a', note:'ตีธาตุ Fire, Electric, Poison, Rock, Steel ได้ — คุ้มสุดที่จะลงทุนก่อนใคร',
+    mons:[{name:'Excadrill',fast:'Mud-Slap',c1:'Drill Run',c2:'Iron Head'},{name:'Rhyperior',fast:'Mud Slap',c1:'Earthquake',c2:'Rock Wrecker'},{name:'Garchomp',fast:'Mud Shot',c1:'Earth Power',c2:'Outrage'},{name:'Golem',fast:'Mud Slap',c1:'Earthquake',c2:'Stone Edge'}]},
+  { key:'rock', label:'Rock', color:'#a08a3f', note:'ตีธาตุ Flying, Fire, Ice, Bug — เจอบ่อยมากในบอส',
+    mons:[{name:'Rhyperior',fast:'Smack Down',c1:'Rock Wrecker',c2:'Earthquake'},{name:'Tyranitar',fast:'Smack Down',c1:'Stone Edge',c2:'Crunch'},{name:'Rampardos',fast:'Smack Down',c1:'Rock Slide',c2:'Rock Wrecker'},{name:'Omastar',fast:'Rock Throw',c1:'Rock Slide',c2:'Ancient Power'}]},
+  { key:'fighting', label:'Fighting', color:'#b34437', note:'ตีธาตุ Normal, Rock, Ice, Dark, Steel — สำคัญมากกับบอส Steel',
+    mons:[{name:'Lucario',fast:'Counter',c1:'Aura Sphere',c2:'Power-Up Punch'},{name:'Machamp',fast:'Counter',c1:'Dynamic Punch',c2:'Cross Chop'},{name:'Breloom',fast:'Counter',c1:'Dynamic Punch',c2:'Grass Knot'},{name:'Heracross',fast:'Counter',c1:'Close Combat',c2:'Megahorn'}]},
+  { key:'fire', label:'Fire', color:'#e07040', note:'ตีธาตุ Grass, Ice, Bug, Steel',
+    mons:[{name:'Charizard',fast:'Fire Spin',c1:'Blast Burn',c2:'Dragon Claw'},{name:'Chandelure',fast:'Fire Spin',c1:'Overheat',c2:'Shadow Ball'},{name:'Flareon',fast:'Fire Spin',c1:'Overheat',c2:'Superpower'},{name:'Emboar',fast:'Ember',c1:'Blast Burn',c2:'Focus Blast'}]},
+  { key:'water', label:'Water', color:'#4d80c8', note:'ตีธาตุ Fire, Rock, Ground — บอสน้ำโผล่บ่อยมาก',
+    mons:[{name:'Feraligatr',fast:'Water Gun',c1:'Hydro Cannon',c2:'Ice Punch'},{name:'Swampert',fast:'Water Gun',c1:'Hydro Cannon',c2:'Surf'},{name:'Gyarados',fast:'Waterfall',c1:'Hydro Pump',c2:'Crunch'},{name:'Kingler',fast:'Bubble',c1:'Crabhammer',c2:'X-Scissor'}]},
+  { key:'electric', label:'Electric', color:'#e0b93b', note:'ตีธาตุ Water, Flying — เป็นจุดอ่อนเดียวของ Electric เอง',
+    mons:[{name:'Raikou',fast:'Volt Switch',c1:'Wild Charge',c2:'Shadow Ball'},{name:'Electivire',fast:'Thunder Shock',c1:'Wild Charge',c2:'Ice Punch'},{name:'Luxray',fast:'Snarl',c1:'Wild Charge',c2:'Psychic Fangs'},{name:'Zebstrika',fast:'Spark',c1:'Wild Charge',c2:'Discharge'}]},
+  { key:'ice', label:'Ice', color:'#7fc6c2', note:'คำตอบหลักของบอส Dragon',
+    mons:[{name:'Glaceon',fast:'Frost Breath',c1:'Avalanche',c2:'Ice Beam'},{name:'Mamoswine',fast:'Powder Snow',c1:'Avalanche',c2:'Bulldoze'},{name:'Jynx',fast:'Frost Breath',c1:'Avalanche',c2:'Psychic'},{name:'Weavile',fast:'Ice Shard',c1:'Avalanche',c2:'Foul Play'}]},
+  { key:'grass', label:'Grass', color:'#5f9c4c', note:'ตีธาตุ Water, Ground, Rock',
+    mons:[{name:'Roserade',fast:'Bullet Seed',c1:'Grass Knot',c2:'Sludge Bomb'},{name:'Venusaur',fast:'Vine Whip',c1:'Frenzy Plant',c2:'Sludge Bomb'},{name:'Leafeon',fast:'Bullet Seed',c1:'Leaf Blade',c2:'X-Scissor'},{name:'Tangrowth',fast:'Vine Whip',c1:'Power Whip',c2:'Sludge Bomb'}]},
+  { key:'poison', label:'Poison', color:'#8f4a9b', note:'ธาตุที่อ่อนสุดในเกม — ตีโดนแค่ Grass และ Fairy ไม่ต้องรีบลงทุน',
+    mons:[{name:'Roserade',fast:'Poison Jab',c1:'Sludge Bomb',c2:'Weather Ball'},{name:'Nidoking',fast:'Poison Jab',c1:'Sludge Wave',c2:'Earthquake'},{name:'Victreebel',fast:'Acid',c1:'Sludge Bomb',c2:'Leaf Blade'},{name:'Gengar',fast:'Lick',c1:'Sludge Bomb',c2:'Shadow Ball'}]},
+  { key:'psychic', label:'Psychic', color:'#e0578a', note:'ตีธาตุ Fighting, Poison',
+    mons:[{name:'Alakazam',fast:'Confusion',c1:'Future Sight',c2:'Shadow Ball'},{name:'Metagross',fast:'Zen Headbutt',c1:'Psychic',c2:'Meteor Mash'},{name:'Gardevoir',fast:'Confusion',c1:'Psychic',c2:'Dazzling Gleam'},{name:'Espeon',fast:'Confusion',c1:'Future Sight',c2:'Last Resort'}]},
+  { key:'ghost', label:'Ghost', color:'#7a60b8', note:'คำตอบหลักของบอส Psychic และ Ghost',
+    mons:[{name:'Gengar',fast:'Lick',c1:'Shadow Ball',c2:'Sludge Bomb'},{name:'Chandelure',fast:'Hex',c1:'Shadow Ball',c2:'Overheat'},{name:'Banette',fast:'Hex',c1:'Shadow Ball',c2:'Poltergeist'},{name:'Trevenant',fast:'Hex',c1:'Shadow Ball',c2:'Seed Bomb'}]},
+  { key:'dark', label:'Dark', color:'#8a7060', note:'มักใช้คู่กับทีม Ghost ในบอส Psychic',
+    mons:[{name:'Tyranitar',fast:'Bite',c1:'Crunch',c2:'Stone Edge'},{name:'Weavile',fast:'Snarl',c1:'Foul Play',c2:'Avalanche'},{name:'Houndoom',fast:'Snarl',c1:'Foul Play',c2:'Flamethrower'},{name:'Hydreigon',fast:'Bite',c1:'Brutal Swing',c2:'Dark Pulse'}]},
+  { key:'dragon', label:'Dragon', color:'#6b50e8', note:'บอสมังกรมีตลอดทั้งปี — ควรมีทีมนี้ติดไว้',
+    mons:[{name:'Garchomp',fast:'Dragon Tail',c1:'Outrage',c2:'Earth Power'},{name:'Salamence',fast:'Dragon Tail',c1:'Outrage',c2:'Draco Meteor'},{name:'Flygon',fast:'Dragon Tail',c1:'Dragon Claw',c2:'Earth Power'},{name:'Dragonite',fast:'Dragon Tail',c1:'Draco Meteor',c2:'Outrage'}]},
+  { key:'fairy', label:'Fairy', color:'#e08fa0', note:'ทางเลือกที่ปลอดภัยกว่าเพื่อสู้บอสมังกร เพราะต้านทาน Dragon',
+    mons:[{name:'Togekiss',fast:'Charm',c1:'Dazzling Gleam',c2:'Flamethrower'},{name:'Granbull',fast:'Charm',c1:'Play Rough',c2:'Close Combat'},{name:'Sylveon',fast:'Charm',c1:'Moonblast',c2:'Psyshock'},{name:'Gardevoir',fast:'Charm',c1:'Dazzling Gleam',c2:'Synchronoise'}]},
+  { key:'steel', label:'Steel', color:'#9ba0b4', note:'จำเป็นเวลาเจอบอส Fairy — ตัวท็อปมักคงคุณค่าได้นาน',
+    mons:[{name:'Metagross',fast:'Bullet Punch',c1:'Meteor Mash',c2:'Earthquake'},{name:'Excadrill',fast:'Metal Claw',c1:'Iron Head',c2:'Drill Run'},{name:'Bastiodon',fast:'Smack Down',c1:'Flash Cannon',c2:'Stone Edge'},{name:'Aggron',fast:'Smack Down',c1:'Heavy Slam',c2:'Stone Edge'}]},
+  { key:'bug', label:'Bug', color:'#8fa030', note:'มักแพ้ทางให้ Dark/Ghost แต่ยังใช้ได้ในบอสเฉพาะทาง',
+    mons:[{name:'Volcarona',fast:'Bug Bite',c1:'Bug Buzz',c2:'Fire Blast'},{name:'Scizor',fast:'Fury Cutter',c1:'X-Scissor',c2:'Iron Head'},{name:'Heracross',fast:'Struggle Bug',c1:'Megahorn',c2:'Close Combat'},{name:'Yanmega',fast:'Bug Bite',c1:'Bug Buzz',c2:'Aerial Ace'}]},
+  { key:'flying', label:'Flying', color:'#8f8ce0', note:'ไม่จำเป็นต้องมีครบทีมตั้งแต่แรก สร้างเมื่อมีเป้าหมายชัดเจน',
+    mons:[{name:'Salamence',fast:'Air Slash',c1:'Hurricane',c2:'Draco Meteor'},{name:'Staraptor',fast:'Wing Attack',c1:'Brave Bird',c2:'Close Combat'},{name:'Honchkrow',fast:'Peck',c1:'Brave Bird',c2:'Dark Pulse'},{name:'Dragonite',fast:'Wing Attack',c1:'Hurricane',c2:'Draco Meteor'}]},
+  { key:'normal', label:'Normal', color:'#a4a48a', note:'ตัวเสริมทั่วไป มักไม่ใช่ตัวหลักในการตีบอส',
+    mons:[{name:'Porygon-Z',fast:'Hidden Power',c1:'Tri Attack',c2:'Zap Cannon'},{name:'Snorlax',fast:'Lick',c1:'Body Slam',c2:'Hyper Beam'},{name:'Kangaskhan',fast:'Low Kick',c1:'Body Slam',c2:'Earthquake'},{name:'Regigigas',fast:'Hidden Power',c1:'Crush Grip',c2:'Giga Impact'}]},
+];
+
+const navEl = document.getElementById('type-nav');
+const contentEl = document.getElementById('type-content');
+
+TYPES.forEach(t => {
+  // -- nav pill
+  const a = document.createElement('a');
+  a.href = '#pve-'+t.key;
+  a.innerHTML = `<span class="type-dot" style="background:${t.color}"></span>${t.label}`;
+  navEl.appendChild(a);
+
+  // -- section
+  const sec = document.createElement('div');
+  sec.className = 'type-section';
+  sec.id = 'pve-'+t.key;
+
+  sec.innerHTML = `
+    <div class="type-head">
+      <span class="type-chip" style="background:${t.color}">${t.label}</span>
+      <h2>Budget Picks</h2>
+    </div>
+    <p class="type-note">${t.note}</p>
+    <div class="mon-grid" id="grid-${t.key}"></div>
+  `;
+  contentEl.appendChild(sec);
+
+  const grid = sec.querySelector('.mon-grid');
+  t.mons.forEach((m, i) => {
+    const dex = DEX[m.name];
+    const spriteUrl = dex ? `${SPRITE}${dex}.png` : '';
+
+    const card = document.createElement('div');
+    card.className = 'mon-card';
+    card.innerHTML = `
+      <span class="mon-rank">#${i+1}</span>
+      <div class="mon-avatar" style="background:${t.color}22; border:1px solid ${t.color}44;">
+        ${spriteUrl
+          ? `<img src="${spriteUrl}" alt="${m.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+             <span class="fallback" style="display:none;">${m.name.slice(0,2).toUpperCase()}</span>`
+          : `<span class="fallback">${m.name.slice(0,2).toUpperCase()}</span>`
+        }
+      </div>
+      <div class="mon-info">
+        <p class="mon-name">${m.name}</p>
+        <div class="mon-moves">
+          <span class="move-lbl">Fast</span><span class="move-fast">${m.fast}</span>
+          <span class="move-lbl">Charge 1</span><span class="move-charge">${m.c1}</span>
+          <span class="move-lbl">Charge 2</span><span class="move-charge">${m.c2}</span>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+});
+</script>
+</body>
+</html>
